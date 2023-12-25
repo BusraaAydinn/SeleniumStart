@@ -4,6 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 from selenium.webdriver.support.wait import WebDriverWait #ilgili driverı bekleten yapı
 from selenium.webdriver.support import expected_conditions as ec #beklenen koşullar
+from selenium.webdriver.common.keys import Keys
 import pytest
 
 #Kullanıcı adı ve şifre alanları boş geçildiğinde uyarı mesajı olarak "Epic sadface: Username is required" gösterilmelidir  
@@ -44,11 +45,12 @@ class Test_Sauce_Demo_Login_Test:
 
 #Kullanıcı adı "locked_out_user" şifre alanı "secret_sauce" gönderildiğinde "Epic sadface: Sorry, this user has been locked out." mesajı gösterilmelidir.
         
-    def test_invalid_login(self):
+    @pytest.mark.parametrize("Username, Password", [("locked_out_user", "secret_sauce")]) 
+    def test_invalid_login(self, Username, Password):
         usernameInput = WebDriverWait(self.driver,2).until(ec.visibility_of_element_located((By.ID,"user-name")))
-        usernameInput.send_keys("locked_out_user")
+        usernameInput.send_keys(Username)
         passwordInput = WebDriverWait(self.driver,2).until(ec.visibility_of_element_located((By.ID,"password")))
-        passwordInput.send_keys("secret_sauce")
+        passwordInput.send_keys(Password)
         loginButton = WebDriverWait(self.driver,2).until(ec.visibility_of_element_located((By.ID,"login-button")))
         loginButton.click()
         errorMessage = WebDriverWait(self.driver,2).until(ec.visibility_of_element_located((By.XPATH,"//h3[@data-test='error']")))
@@ -58,11 +60,12 @@ class Test_Sauce_Demo_Login_Test:
 #Kullanıcı adı "standard_user" şifre "secret_sauce" gönderildiğinde kullanıcı "/inventory.html" sayfasına gönderilmelidir. 
 #Giriş yapıldıktan sonra kullanıcıya gösterilen ürün sayısı "6" adet olmalıdır. 
     
-    def test_product_control(self):
+    @pytest.mark.parametrize("Username, Password", [("standard_user", "secret_sauce"),("visual_user","secret_sauce")])
+    def test_product_control(self, Username, Password):
         usernameInput = WebDriverWait(self.driver,2).until(ec.visibility_of_element_located((By.ID,"user-name")))
-        usernameInput.send_keys("standard_user")
+        usernameInput.send_keys(Username)
         passwordInput = WebDriverWait(self.driver,2).until(ec.visibility_of_element_located((By.ID,"password")))
-        passwordInput.send_keys("secret_sauce")
+        passwordInput.send_keys(Password)
         loginButton = WebDriverWait(self.driver,2).until(ec.visibility_of_element_located((By.ID,"login-button")))
         loginButton.click()
         current_url = self.driver.current_url 
