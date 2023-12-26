@@ -47,12 +47,3 @@ def test_add(a, b):
 -Bu kod, add() fonksiyonunu iki kez çalıştıracaktır: bir kez a=1 ve b=2 ile ve bir kez a=3 ve b=4 ile.
 
 
-PyTest Decoratorlarını Kullanmanın Faydaları
-
-PyTest decoratorlarını kullanarak testlerinizi daha verimli hale getirebilirsiniz. Decoratorlar, testlerinizi daha kolay çalıştırmanıza, hata ayıklamanızı ve raporlamanızı sağlar.
-
-Decoratorlar, testlerinizi daha kolay çalıştırmanıza yardımcı olur. Örneğin, @pytest.mark.parametrize() decorator'ü, aynı test kodunu farklı veri kümeleri üzerinde çalıştırmanızı sağlar. Bu, testlerinizi daha kapsamlı ve güvenilir hale getirmenize yardımcı olur.
-
-Decoratorlar, testlerinizi hata ayıklamanızı kolaylaştırır. Örneğin, @pytest.mark.skip() ve @pytest.mark.xfail() decorator'leri, testlerinizin belirli koşullar altında atlanması veya başarısız olması gerektiğini belirtmenize olanak tanır. Bu, testlerinizin neden başarısız olduğunu belirlemenizi kolaylaştırır.
-
-Decoratorlar, testlerinizin raporlanmasını kolaylaştırır. Örneğin, @pytest.mark.skipif() ve @pytest.mark.xfail() decorator'leri, testlerin neden atlandığını veya başarısız olduğunu raporlamanıza olanak tanır. Bu, testlerinizin durumunu takip etmenizi kolaylaştırır.
