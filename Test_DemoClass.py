@@ -6,7 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait #ilgili driverı bekle
 from selenium.webdriver.support import expected_conditions as ec #beklenen koşullar
 import pytest
 import openpyxl
-
+import json
 class Test_DemoClass:
     #prefix => test_ 
     def setup_method(self): #her test başlangıcında çalışacak fonk
@@ -28,8 +28,21 @@ class Test_DemoClass:
             data.append((username,password))
 
         return data
+    
+    def readInvalidDataFromJson():
+        file = open("data/invalidLogin.json")
+        data = json.load(file)
+        parameter = []
 
-    @pytest.mark.parametrize("username,password",getData())
+        for user in data ['users']:   
+            username = user["username"]
+            password = user["password"]
+            parameter.append((username,password))  
+        
+        return parameter
+
+
+    @pytest.mark.parametrize("username,password",readInvalidDataFromJson())
     def test_invalid_login(self,username,password):
         usernameInput = WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,"user-name")))
         usernameInput.send_keys(username)
